@@ -9,6 +9,7 @@ export default function AddProject({ setNewProject, setProjectList }) {
     tasks: [],
   });
   const [emptyField, setEmptyFiled] = useState(false);
+  const errorTitle = inputProject.title.trim() === "";
 
   function handleInput(name, value) {
     setInputProject((prev) => ({
@@ -18,13 +19,11 @@ export default function AddProject({ setNewProject, setProjectList }) {
   }
 
   function handleSaveBtn() {
-    if (inputProject.title !== "" && inputProject.date !== "") {
-      setProjectList((prev) => [
-        ...prev.map((item) => ({ ...item, active: false })),
-        inputProject,
-      ]);
-      setNewProject(false);
-    }
+    setProjectList((prev) => [
+      ...prev.map((item) => ({ ...item, active: false })),
+      inputProject,
+    ]);
+    setNewProject(false);
   }
 
   function handleEmptyField() {
@@ -41,7 +40,7 @@ export default function AddProject({ setNewProject, setProjectList }) {
         </button>
         <button
           onClick={
-            inputProject.title === "" || inputProject.date === ""
+            inputProject.date === "" || errorTitle
               ? handleEmptyField
               : handleSaveBtn
           }
@@ -56,7 +55,7 @@ export default function AddProject({ setNewProject, setProjectList }) {
           inputMode="text"
           onChange={(e) => handleInput("title", e.target.value)}
         />
-        {emptyField && inputProject.title === "" && (
+        {emptyField && errorTitle && (
           <div className="mt-1 text-[#fd7f11]">Title cannot be empty!</div>
         )}
         <div className="font-bold text-[18px] mt-6">DESCRIPTION</div>

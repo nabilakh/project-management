@@ -58,7 +58,7 @@ const ProjectDetail = forwardRef(({ projectList, setProjectList }, ref) => {
         ref={inputTask}
       />
       <label
-        onClick={() => handleTasks()}
+        onClick={() => inputTask.current.value.trim() !== "" && handleTasks()}
         className="ml-6 font-semibold cursor-pointer hover:text-[#ff983d]">
         Add Task
       </label>
